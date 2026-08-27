@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RULER - Complete Technical Docs | AmphiptereOS</title>
+  <meta name="description" content="Ruler - Secure Defense Layer Fake IP Decoy System. Complete source code breakdown, functions, flags, and usage. Built in Go for AmphiptereOS.">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZDDNFE6F4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HZDDNFE6F4');
+  </script>
+
+  <style>
+    body { font-family: Consolas, monospace; max-width: 1050px; margin: 0 auto; background: #080808; color: #e0e0e0; padding: 20px; line-height: 1.8; }
+   .nav { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; border-bottom: 1px solid #222; padding-bottom: 15px; }
+   .nav img { height: 38px; background: #fff; border-radius: 5px; padding: 2px; }
+    pre { background: #111; padding: 18px; border-radius: 8px; border: 1px solid #333; overflow-x: auto; }
+    code { color: #36d7b7; }
+   .func { background: #151515; border-left: 4px solid #36d7b7; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    h1,h2,h3 { color: #36d7b7; }
+   .banner { width: 100%; max-width: 750px; border-radius: 12px; border: 1px solid #333; margin: 20px auto; display: block; }
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+    th, td { border: 1px solid #333; padding: 12px; text-align: left; }
+    th { background: #151515; color: #36d7b7; }
+   .warn { border: 2px solid #ff4444; background: #1f0f0f; padding: 20px; border-radius: 10px; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+
+<div class="nav">
+  <img src="/assets/logo.png" alt="AmphiptereOS Logo"><b>AmphiptereOS</b><span style="color:#666;"> / Tools / Ruler / Docs</span>
+</div>
+
+<div class="warn">
+  <h3 style="color:#ff4444; margin-top:0;">⚠️ LEGAL DISCLAIMER - READ BEFORE USE</h3>
+  <p><b>RULER is for educational purposes and authorized defensive testing only. Never use these tools for illegal activities.</b></p>
+  <p>This tool modifies network interface configuration and requires root. Use only on systems/networks you own or have explicit written permission to test.</p>
+  <p><b>Use at your own responsibility.</b> AmphiptereOS is not liable for network disruption, IP conflicts, or legal consequences. By using, you agree to use it ethically.</p>
+</div>
+
+<div style="text-align:center;">
+  <img src="./Ruler.png" class="banner" alt="RULER Banner">
+  <h1 style="font-size:48px; margin:10px 0;">RULER</h1>
+  <p style="font-size:19px; color:#aaa;">Secure Defense Layer - Fake IP Decoy System</p>
+  <p>Complete Code Breakdown - Open Source - Written in Go</p>
+</div>
+
+<h2>1. What is Ruler? (From Your Code)</h2>
+<p>From <code>showBanner()</code>: Ruler prints your ASCII banner with cyan color <code>\033[36m</code>. It's a daemon that lives on your interface and creates a <b>Rotating Decoy Grid</b>.</p>
+<p>It is NOT an attack tool. It's a <b>Moving Target Defense</b> - it adds 10 fake IPs to confuse scanners.</p>
+
+<h2>2. Full Source Code Functions - Explained</h2>
+
+<div class="func">
+  <h3>func showBanner()</h3>
+  <p>Prints the ASCII art logo: RULER. Uses ANSI escape codes for cyan color. First function called in <code>main()</code> to brand the tool.</p>
+</div>
+
+<div class="func">
+  <h3>func generateFakeIPs() []string</h3>
+  <p><b>What it does:</b> Creates 10 fake IPs.</p>
+  <p><code>r := rand.New(rand.NewSource(time.Now().UnixNano()))</code> - seeds random with current time so every rotation is different.</p>
+  <p><code>fmt.Sprintf("10.255.254.%d", r.Intn(200)+10)</code> - generates IPs from <code>10.255.254.10</code> to <code>10.255.254.209</code>. You chose <code>10.255.254.0/24</code> because it's a rare, unused private subnet - smart, avoids conflict with home routers (192.168.1.x).</p>
+  <p>Returns <code>[]string</code> slice of 10 IPs.</p>
+</div>
+
+<div class="func">
+  <h3>func validateInterface(ifaceName string) error</h3>
+  <p>Security check before doing anything:</p>
+  <ul>
+    <li><code>net.InterfaceByName(ifaceName)</code> - checks if interface like eth0/wlan0 exists. If not, returns "interface does not exist".</li>
+    <li><code>iface.Flags&net.FlagUp == 0</code> - checks if interface is UP. If down, returns "interface is down".</li>
+  </ul>
+  <p>This prevents crashing on wrong interface name.</p>
+</div>
+
+<div class="func">
+  <h3>func applyDecoys(iface string, oldIPs []string, newIPs []string)</h3>
+  <p>This is the core engine:</p>
+  <p>1. First loop: <code>ip addr del ip/24 dev iface</code> - deletes old decoy IPs using Linux <code>ip</code> command via <code>exec.Command</code>.</p>
+  <p>2. Second loop: <code>ip addr add ip/24 dev iface</code> - binds new decoys. Prints <code>[*] Deployed Decoy Active -> %s</code>. If fails (not root), prints <code>Are you root?</code>.</p>
+</div>
+
+<div class="func">
+  <h3>func clearAll(iface string, ips []string)</h3>
+  <p>Forensic cleanup handler. Called when you press Ctrl+C. Loops all current IPs and runs <code>ip addr del</code>. Prints <code>Network restored to clean state</code>. This is why your tool is safe - no ghost IPs.</p>
+</div>
+
+<div class="func">
+  <h3>func main() - Complete Flow</h3>
+  <ol>
+    <li>Calls <code>showBanner()</code></li>
+    <li>Defines flag: <code>flag.Int("interval", 7, "Rotation interval in minutes")</code> - default 7 mins</li>
+    <li>Parses args: expects <code>&lt;network_interface&gt;</code> like eth0. If missing, shows Usage: <code>sudo go run main.go [options] &lt;network_interface&gt;</code></li>
+    <li>Calls <code>validateInterface()</code></li>
+    <li>Creates signal channel: <code>signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)</code> to catch Ctrl+C</li>
+    <li>Creates ticker: <code>time.NewTicker(time.Duration(*intervalFlag) * time.Minute)</code></li>
+    <li>Initial deploy: <code>generateFakeIPs() + applyDecoys()</code></li>
+    <li>Goroutine: <code>for range ticker.C</code> - every interval, generates new IPs and rotates</li>
+    <li>Blocks on <code>&lt;-sigChan</code> until you stop, then calls <code>clearAll()</code></li>
+  </ol>
+</div>
+
+<h2>3. How to Use - All Commands</h2>
+<table>
+<tr><th>Command</th><th>From Code</th></tr>
+<tr><td><code>go run main.go eth0</code></td><td>Basic - fails without sudo, your error handler catches</td></tr>
+<tr><td><code>sudo go run main.go eth0</code></td><td>Runs with default 7 min from flag.Int</td></tr>
+<tr><td><code>sudo go run main.go -interval 5 eth0</code></td><td>Custom rotation - parses via flag.Args()</td></tr>
+<tr><td><code>sudo./ruler -interval 1 wlan0</code></td><td>After building binary</td></tr>
+<tr><td><code>ip addr show eth0 | grep 10.255.254</code></td><td>Verify decoys are live</td></tr>
+<tr><td><code>Ctrl + C</code></td><td>Triggers sigChan -> clearAll()</td></tr>
+</table>
+
+<h2>4. Requirements & Dependencies</h2>
+<p>From your imports: <code>flag, fmt, math/rand, net, os, os/exec, os/signal, syscall, time</code></p>
+<ul>
+<li>Go 1.19+</li>
+<li>Linux with <code>iproute2</code> installed (provides <code>ip</code> command)</li>
+<li>Root access - because <code>ip addr add</code> needs root</li>
+<li>Interface must be UP</li>
+</ul>
+
+<h2>5. Limitations in Current Version (v1)</h2>
+<ul>
+<li>Range is predictable: 10.255.254.10-209 only - I can improve to random across 3 private ranges</li>
+<li>Uses <code>exec.Command</code> not netlink - slower</li>
+<li>No log file</li>
+</ul>
+
+<h2>6. Use Cases</h2>
+<ul>
+<li>Blue Team training in AmphiptereOS</li>
+<li>Deceive Nmap: <code>nmap -sn 10.255.254.0/24</code> will show 10 hosts</li>
+<li>SOC lab - trigger alerts on decoy IPs to detect scanner</li>
+</ul>
+
+<div style="text-align:center; margin:40px 0;">
+  <a href="https://github.com/AmphiptereOS/ruler" class="button" style="background:#36d7b7; color:#000; padding:14px 28px; text-decoration:none; border-radius:6px; font-weight:bold;">View Source on GitHub</a>
+</div>
+
+<hr style="border-color:#222;">
+<p style="text-align:center; font-size:12px; color:#555;">© 2026 AmphiptereOS | Full Technical Docs for Ruler v1.0 | Educational Only</p>
+
+</body>
+</html>
