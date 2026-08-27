@@ -1,0 +1,15 @@
+
+ruler
+.exe
+.exe~
+.dll
+.so
+.dylib
+
+.out
+.test
+/vendor/
+
+.idea/
+.vscode/
+.swp
