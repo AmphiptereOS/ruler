@@ -1,53 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RULER - Linux Defense Tool | AmphiptereOS</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZDDNFE6F4"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date()); gtag('config','G-HZDDNFE6F4');</script>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RULER - Linux Defense Tool</title>
 <style>
-body{margin:0;background:#0a0a0a;color:#d4d4d4;font-family:monospace}
-.top{border-bottom:1px solid #1a1a1a;padding:14px 22px;display:flex;justify-content:space-between}
-.top b{color:#fff;letter-spacing:2px}
-.wrap{max-width:760px;margin:0 auto;padding:60px 20px}
-.logo{display:block;width:180px;margin:0 auto}
-h1{text-align:center;color:#fff;font-size:48px;letter-spacing:12px;margin:20px 0 0}
-.sub{text-align:center;color:#666;font-size:12px;letter-spacing:4px;margin-top:4px}
-.desc{margin-top:40px;background:#111;border:1px solid #1f1f1f;border-radius:12px;padding:26px;line-height:1.8;color:#999;font-size:14px}
-.desc b{color:#fff}
-pre{background:#111;border:1px solid #1f1f1f;padding:18px;border-radius:8px;color:#9eff9e;margin-top:24px;overflow:auto}
-.btns{margin-top:30px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.btn{padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700;font-size:13px}
-.w{background:#fff;color:#000}
-.o{border:1px solid #333;color:#fff}
-.note{margin-top:30px;color:#444;font-size:11px;text-align:center}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e5e5e5;font-family:Inter,system-ui,sans-serif;line-height:1.6}
+.nav{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid #1f1f1f;background:#0a0a0a;position:sticky;top:0}
+.nav b{letter-spacing:1px}
+.nav a{color:#888;text-decoration:none;font-size:13px;margin-left:16px}
+.nav a:hover{color:#fff}
+.hero{text-align:center;padding:80px 20px 40px;max-width:900px;margin:0 auto}
+.hero img{width:220px;height:220px;object-fit:contain;filter:drop-shadow(0 0 30px rgba(255,255,255,0.12));border-radius:20px;background:#111}
+.hero h1{font-family:monospace;letter-spacing:8px;font-size:58px;margin:24px 0 0;color:#fff}
+.hero .tag{color:#22d3ee;font-family:monospace;letter-spacing:3px;font-size:13px;margin-top:8px}
+.btn-row{margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn{padding:13px 26px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;display:inline-block;transition:.2s}
+.btn-white{background:#fff;color:#000} .btn-white:hover{background:#e5e5e5}
+.btn-dark{background:#141414;border:1px solid #2a2a2a;color:#fff} .btn-dark:hover{border-color:#444}
+.btn-cyan{background:#22d3ee;color:#000} .btn-cyan:hover{background:#06b6d4}
+section{max-width:900px;margin:0 auto;padding:20px 20px 0}
+.card{background:#141414;border:1px solid #222;border-radius:14px;padding:28px;margin-top:20px}
+.card h2{font-family:monospace;color:#fff;font-size:20px;margin-bottom:12px;letter-spacing:1px}
+.card h3{color:#fff;font-size:16px;margin:16px 0 8px}
+.card p, .card li{color:#999;font-size:14.5px}
+.card ul{padding-left:18px;margin-top:8px}
+.card li{margin:6px 0}
+.card b{color:#d4d4d4}
+pre{background:#0e0e0e;border:1px solid #232323;border-radius:8px;padding:16px;overflow:auto;font-size:13px;color:#7dd3fc;margin-top:12px}
+code{background:#1a1a1a;padding:2px 6px;border-radius:4px;color:#7dd3fc;font-size:13px}
+.footer{text-align:center;color:#444;padding:50px 20px;font-size:12px;border-top:1px solid #1a1a1a;margin-top:50px}
 </style>
 </head>
 <body>
-<div class="top"><b>RULER</b><span>AmphiptereOS / Tools</span></div>
-<div class="wrap">
-<img class="logo" src="Ruler.png">
-<h1>RULER</h1>
-<div class="sub">NETWORK DEFENSE // LINUX ONLY</div>
 
-<div class="desc">
-<b>Ruler 👑</b> is a lightweight, high-performance network defense tool written in Go designed to confuse active reconnaissance and network mapping attempts.<br><br>
-Ruler dynamically binds and rotates a block of randomized decoy IP addresses on your network interface at custom intervals, protecting your system's real IP presence.<br><br>
-Generates and rotates a block of 10 randomized decoy IP addresses within an isolated private subnet block (10.255.254.x) to prevent ARP collisions. Customize with -interval flag to bypass IDS/IPS signature triggers.<br><br>
-Automatically validates interface and auto-purges all fake IP traces on Ctrl+C / SIGTERM.
+<div class="nav">
+<div><b>AMPHIPTEREOS</b><span style="color:#555;margin-left:8px">/ RULER</span></div>
+<div>
+<a href="https://github.com/AmphiptereOS">Main OS</a>
+<a href="https://youtube.com/@amphiptere-os">YouTube</a>
+</div>
 </div>
 
-<pre>sudo ./ruler eth0
-sudo ./ruler -interval 5 wlan0
-sudo ./ruler -interval 1 eth0</pre>
+<div class="hero">
+<img src="Ruler.png" alt="Ruler Logo">
+<h1>RULER 👑</h1>
+<div class="tag">SECURE DEFENSE LAYER • FAKE IP DECOY SYSTEM</div>
 
-<div class="btns">
-<a class="btn w" href="https://github.com/AmphiptereOS/ruler/releases/download/v1.0.0/ruler" download>Download ruler (Linux binary)</a>
-<a class="btn o" href="Ruler.go" download>Download Ruler.go (source)</a>
-<a class="btn o" href="https://github.com/AmphiptereOS/ruler">GitHub</a>
+<div class="btn-row">
+<a class="btn btn-white" href="Ruler.go" download>Download Ruler.go for Linux</a>
+<a class="btn btn-dark" href="https://github.com/AmphiptereOS/ruler" target="_blank">GitHub Source</a>
+<a class="btn btn-cyan" href="https://youtube.com/@amphiptere-os" target="_blank">YouTube</a>
+</div>
 </div>
 
-<div class="note">For authorized defensive testing only. Use only on systems you own. No Windows — Linux only.</div>
+<section>
+<div class="card">
+<h2>What is Ruler?</h2>
+<p><b style="color:#fff">Ruler</b> is an open-source Linux defense tool created by <b>Amphiptere OS</b>. It functions as a <b>Secure Defense Layer and Fake IP Decoy System</b> that implements <b>Moving Target Defense (MTD)</b> strategies to confuse network scanners, automated enumeration tools, and attackers performing reconnaissance.</p>
 </div>
+
+<div class="card">
+<h2>About Ruler</h2>
+<p>Ruler protects a host by dynamically generating and continuously rotating a grid of fake secondary IP addresses on a specified network interface. This floods any active network mapping or sniffing tools with false data, obscuring the actual host footprint.</p>
+<h3>Key operational characteristics include:</h3>
+<ul>
+<li><b>Interface Validation:</b> Verifies that the target network interface exists and is active (UP) before launching.</li>
+<li><b>Decoy Generation:</b> Automatically generates 10 randomized secondary IP addresses within a simulated subnet block (10.255.254.x).</li>
+<li><b>Timed Rotation:</b> Automatically cycles through the decoy grid at user-defined time intervals, dropping stale mock IPs and binding fresh ones.</li>
+<li><b>Graceful Cleanup:</b> Listens for termination signals (Ctrl+C) to instantly purge all decoy IP traces from the system, returning the interface to a clean, original state upon exit.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>What Ruler Does</h2>
+<p>When an attacker runs <code>nmap</code> or any network mapper against your network, Ruler makes your single host appear as 11 hosts. The decoy grid rotates every few minutes, so scanners cannot fingerprint your real footprint. Your real IP gets lost in your own noise. It's Moving Target Defense for Linux.</p>
+</div>
+
+<div class="card">
+<h2>How to Use Ruler</h2>
+<p>Ruler is executed via Go source (Ruler.go) and requires root privileges <code>sudo</code> to interact with the Linux kernel's network address tables. Works on AmphiptereOS, Debian, Kali, Ubuntu, Arch — any Linux.</p>
+
+<h3>1. Basic Execution (Default 7 min rotation)</h3>
+<pre>sudo go run Ruler.go &lt;network_interface&gt;
+
+Example:
+sudo go run Ruler.go eth0</pre>
+
+<h3>2. Custom Interval Command</h3>
+<p>Run with custom rotation interval (e.g., every 5 minutes):</p>
+<pre>sudo go run Ruler.go -interval &lt;minutes&gt; &lt;network_interface&gt;
+
+Example:
+sudo go run Ruler.go -interval 5 wlan0</pre>
+
+<h3>3. How to Customise Commands</h3>
+<pre># Rotate every 1 minute for aggressive defense
+sudo go run Ruler.go -interval 1 eth0
+
+# Rotate every 10 minutes for stealth labs
+sudo go run Ruler.go -interval 10 wlan0
+
+# Check if decoys are live
+ip addr show eth0 | grep 10.255.254
+
+# Stop and auto-clean (purges all fake IPs)
+Ctrl + C</pre>
+
+<h3>Usage Help</h3>
+<p>Running without interface shows help:</p>
+<pre>sudo go run Ruler.go</pre>
+</div>
+
+<div class="card">
+<h2>Links</h2>
+<ul>
+<li><b>Download Ruler:</b> <a href="Ruler.go" download style="color:#22d3ee">Click here to download Ruler.go (Linux)</a> — direct file download for Linux</li>
+<li><b>GitHub Repository:</b> <a href="https://github.com/AmphiptereOS/ruler" target="_blank" style="color:#22d3ee">github.com/AmphiptereOS/ruler</a></li>
+<li><b>Main Amphiptere OS:</b> <a href="https://github.com/AmphiptereOS" target="_blank" style="color:#22d3ee">github.com/AmphiptereOS</a></li>
+<li><b>YouTube:</b> <a href="https://youtube.com/@amphiptere-os" target="_blank" style="color:#22d3ee">youtube.com/@amphiptere-os</a></li>
+</ul>
+</div>
+</section>
+
+<div class="footer">
+© 2026 AmphiptereOS • Ruler is part of AmphiptereOS Tools<br>
+For educational, defensive research, and authorized testing only.
+</div>
+
 </body>
 </html>
