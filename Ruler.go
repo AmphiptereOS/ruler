@@ -84,8 +84,8 @@ func main() {
 
 	args := flag.Args()
 	if len(args) < 1 {
-		fmt.Println("Usage: sudo go run main.go [options] <network_interface>")
-		fmt.Println("Example: sudo go run main.go -interval 5 eth0")
+		fmt.Println("Usage: sudo go run Ruler.go [options] <network_interface>")
+		fmt.Println("Example: sudo go run Ruler.go -interval 5 eth0")
 		os.Exit(1)
 	}
 
