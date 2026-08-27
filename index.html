@@ -1,150 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RULER - Complete Technical Docs | AmphiptereOS</title>
-  <meta name="description" content="Ruler - Secure Defense Layer Fake IP Decoy System. Complete source code breakdown, functions, flags, and usage. Built in Go for AmphiptereOS.">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RULER - Network Decoy System | AmphiptereOS</title>
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZDDNFE6F4"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-HZDDNFE6F4');
-  </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HZDDNFE6F4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date()); gtag('config','G-HZDDNFE6F4');</script>
 
-  <style>
-    body { font-family: Consolas, monospace; max-width: 1050px; margin: 0 auto; background: #080808; color: #e0e0e0; padding: 20px; line-height: 1.8; }
-   .nav { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; border-bottom: 1px solid #222; padding-bottom: 15px; }
-   .nav img { height: 38px; background: #fff; border-radius: 5px; padding: 2px; }
-    pre { background: #111; padding: 18px; border-radius: 8px; border: 1px solid #333; overflow-x: auto; }
-    code { color: #36d7b7; }
-   .func { background: #151515; border-left: 4px solid #36d7b7; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; }
-    h1,h2,h3 { color: #36d7b7; }
-   .banner { width: 100%; max-width: 750px; border-radius: 12px; border: 1px solid #333; margin: 20px auto; display: block; }
-    table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-    th, td { border: 1px solid #333; padding: 12px; text-align: left; }
-    th { background: #151515; color: #36d7b7; }
-   .warn { border: 2px solid #ff4444; background: #1f0f0f; padding: 20px; border-radius: 10px; margin-bottom: 30px; }
-  </style>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap');
+:root{--bg:#0a0a0a;--card:#141414;--border:#262626;--cyan:#22d3ee;--text:#e5e5e5;--muted:#888}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden}
+a{color:var(--cyan);text-decoration:none}
+.nav{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid var(--border);background:#0a0a0a;position:sticky;top:0;z-index:10}
+.nav b{font-family:'JetBrains Mono',monospace;letter-spacing:2px}
+.hero{text-align:center;padding:80px 20px 40px;max-width:900px;margin:0 auto}
+.hero img{width:260px;max-width:70vw;filter:drop-shadow(0 0 30px rgba(34,211,238,0.3));margin-bottom:20px}
+.hero h1{font-size:64px;margin:0;letter-spacing:8px;font-family:'JetBrains Mono',monospace;font-weight:800}
+.hero p.tag{color:var(--cyan);font-family:'JetBrains Mono',monospace;letter-spacing:3px;margin-top:12px;font-size:14px}
+.hero p.desc{color:var(--muted);font-size:18px;max-width:600px;margin:20px auto;line-height:1.6}
+.btn{display:inline-block;padding:14px 28px;border-radius:8px;font-weight:600;margin:10px;font-family:'JetBrains Mono',monospace;transition:0.2s}
+.btn-primary{background:var(--cyan);color:#000}
+.btn-primary:hover{box-shadow:0 0 20px rgba(34,211,238,0.5)}
+.btn-sec{border:1px solid var(--border);color:var(--text);background:var(--card)}
+.grid{max-width:1000px;margin:60px auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;padding:0 20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px}
+.card h3{margin-top:0;color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:16px}
+.card p{color:var(--muted);font-size:14px;line-height:1.6}
+.section{max-width:900px;margin:80px auto;padding:0 20px}
+.section h2{font-family:'JetBrains Mono',monospace;font-size:22px;border-left:4px solid var(--cyan);padding-left:12px}
+pre{background:#111;border:1px solid var(--border);border-radius:10px;padding:20px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7}
+.disclaimer{border:1px solid #ff444422;background:#ff444a11;padding:16px;border-radius:10px;color:#ff8888;font-size:12px;margin-top:60px}
+footer{text-align:center;padding:40px;color:#444;font-size:12px}
+</style>
 </head>
 <body>
 
-<div class="nav">
-  <img src="/assets/logo.png" alt="AmphiptereOS Logo"><b>AmphiptereOS</b><span style="color:#666;"> / Tools / Ruler / Docs</span>
+<div class="nav"><b>AMPHIPTEREOS</b><span style="color:#555;font-size:13px">/ Tools / Ruler</span></div>
+
+<div class="hero">
+<img src="Ruler.png" alt="RULER">
+<h1>RULER</h1>
+<p class="tag">NETWORK DECOY IP ROTATION TOOL</p>
+<p class="desc">A lightweight defensive layer for AmphiptereOS. Ruler deploys a rotating grid of decoy IPs on your own interface to deceive network scanners and protect your real footprint. Built for Purple Team labs.</p>
+<div style="margin-top:30px">
+<a class="btn btn-primary" href="https://github.com/AmphiptereOS/ruler">View on GitHub</a>
+<a class="btn btn-sec" href="#install">How to Use ↓</a>
+</div>
 </div>
 
-<div class="warn">
-  <h3 style="color:#ff4444; margin-top:0;">⚠️ LEGAL DISCLAIMER - READ BEFORE USE</h3>
-  <p><b>RULER is for educational purposes and authorized defensive testing only. Never use these tools for illegal activities.</b></p>
-  <p>This tool modifies network interface configuration and requires root. Use only on systems/networks you own or have explicit written permission to test.</p>
-  <p><b>Use at your own responsibility.</b> AmphiptereOS is not liable for network disruption, IP conflicts, or legal consequences. By using, you agree to use it ethically.</p>
+<div class="grid">
+<div class="card"><h3>🛡️ Defensive, Not Offensive</h3><p>Only adds private IPs (10.255.254.x) to YOUR OWN machine. Requires root. Cannot attack others. Auto-cleans on exit.</p></div>
+<div class="card"><h3>🔄 Rotating Grid</h3><p>Creates 10 decoys and rotates them every 7 minutes (customizable). Scanners see a moving target, not your real host.</p></div>
+<div class="card"><h3>⚡ Built for AmphiptereOS</h3><p>Written in Go, single binary, no dependencies. Works on eth0, wlan0, any Linux interface. Lightweight daemon.</p></div>
 </div>
 
-<div style="text-align:center;">
-  <img src="./Ruler.png" class="banner" alt="RULER Banner">
-  <h1 style="font-size:48px; margin:10px 0;">RULER</h1>
-  <p style="font-size:19px; color:#aaa;">Secure Defense Layer - Fake IP Decoy System</p>
-  <p>Complete Code Breakdown - Open Source - Written in Go</p>
+<div class="section">
+<h2>What it does</h2>
+<p style="color:var(--muted);line-height:1.8">When a scanner like Nmap does <code style="color:var(--cyan)">nmap -sn 10.255.254.0/24</code>, instead of 1 host, it sees 10 fake hosts. Your real IP is hidden in noise. Perfect for SOC training, Honeypot labs, and Blue Team simulations.</p>
+
+<h2 id="install">Usage</h2>
+<pre>sudo ./ruler eth0
+sudo ./ruler -interval 5 wlan0   # rotate every 5 min
+
+# verify
+ip addr show eth0 | grep 10.255.254
+
+# stop (auto-cleans)
+Ctrl + C</pre>
+
+<h2>Requirements</h2>
+<p style="color:var(--muted)">Linux + iproute2 + Root access. Part of AmphiptereOS ISO — already included in <code>/opt/tools/ruler</code></p>
+
+<div class="disclaimer">
+<b>⚠️ EDUCATIONAL USE ONLY</b><br>
+Ruler is for authorized testing and education. Use only on systems you own. It modifies local network config. AmphiptereOS is not liable for misuse. Use ethically.
+</div>
 </div>
 
-<h2>1. What is Ruler? (From Your Code)</h2>
-<p>From <code>showBanner()</code>: Ruler prints your ASCII banner with cyan color <code>\033[36m</code>. It's a daemon that lives on your interface and creates a <b>Rotating Decoy Grid</b>.</p>
-<p>It is NOT an attack tool. It's a <b>Moving Target Defense</b> - it adds 10 fake IPs to confuse scanners.</p>
-
-<h2>2. Full Source Code Functions - Explained</h2>
-
-<div class="func">
-  <h3>func showBanner()</h3>
-  <p>Prints the ASCII art logo: RULER. Uses ANSI escape codes for cyan color. First function called in <code>main()</code> to brand the tool.</p>
-</div>
-
-<div class="func">
-  <h3>func generateFakeIPs() []string</h3>
-  <p><b>What it does:</b> Creates 10 fake IPs.</p>
-  <p><code>r := rand.New(rand.NewSource(time.Now().UnixNano()))</code> - seeds random with current time so every rotation is different.</p>
-  <p><code>fmt.Sprintf("10.255.254.%d", r.Intn(200)+10)</code> - generates IPs from <code>10.255.254.10</code> to <code>10.255.254.209</code>. You chose <code>10.255.254.0/24</code> because it's a rare, unused private subnet - smart, avoids conflict with home routers (192.168.1.x).</p>
-  <p>Returns <code>[]string</code> slice of 10 IPs.</p>
-</div>
-
-<div class="func">
-  <h3>func validateInterface(ifaceName string) error</h3>
-  <p>Security check before doing anything:</p>
-  <ul>
-    <li><code>net.InterfaceByName(ifaceName)</code> - checks if interface like eth0/wlan0 exists. If not, returns "interface does not exist".</li>
-    <li><code>iface.Flags&net.FlagUp == 0</code> - checks if interface is UP. If down, returns "interface is down".</li>
-  </ul>
-  <p>This prevents crashing on wrong interface name.</p>
-</div>
-
-<div class="func">
-  <h3>func applyDecoys(iface string, oldIPs []string, newIPs []string)</h3>
-  <p>This is the core engine:</p>
-  <p>1. First loop: <code>ip addr del ip/24 dev iface</code> - deletes old decoy IPs using Linux <code>ip</code> command via <code>exec.Command</code>.</p>
-  <p>2. Second loop: <code>ip addr add ip/24 dev iface</code> - binds new decoys. Prints <code>[*] Deployed Decoy Active -> %s</code>. If fails (not root), prints <code>Are you root?</code>.</p>
-</div>
-
-<div class="func">
-  <h3>func clearAll(iface string, ips []string)</h3>
-  <p>Forensic cleanup handler. Called when you press Ctrl+C. Loops all current IPs and runs <code>ip addr del</code>. Prints <code>Network restored to clean state</code>. This is why your tool is safe - no ghost IPs.</p>
-</div>
-
-<div class="func">
-  <h3>func main() - Complete Flow</h3>
-  <ol>
-    <li>Calls <code>showBanner()</code></li>
-    <li>Defines flag: <code>flag.Int("interval", 7, "Rotation interval in minutes")</code> - default 7 mins</li>
-    <li>Parses args: expects <code>&lt;network_interface&gt;</code> like eth0. If missing, shows Usage: <code>sudo go run main.go [options] &lt;network_interface&gt;</code></li>
-    <li>Calls <code>validateInterface()</code></li>
-    <li>Creates signal channel: <code>signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)</code> to catch Ctrl+C</li>
-    <li>Creates ticker: <code>time.NewTicker(time.Duration(*intervalFlag) * time.Minute)</code></li>
-    <li>Initial deploy: <code>generateFakeIPs() + applyDecoys()</code></li>
-    <li>Goroutine: <code>for range ticker.C</code> - every interval, generates new IPs and rotates</li>
-    <li>Blocks on <code>&lt;-sigChan</code> until you stop, then calls <code>clearAll()</code></li>
-  </ol>
-</div>
-
-<h2>3. How to Use - All Commands</h2>
-<table>
-<tr><th>Command</th><th>From Code</th></tr>
-<tr><td><code>go run main.go eth0</code></td><td>Basic - fails without sudo, your error handler catches</td></tr>
-<tr><td><code>sudo go run main.go eth0</code></td><td>Runs with default 7 min from flag.Int</td></tr>
-<tr><td><code>sudo go run main.go -interval 5 eth0</code></td><td>Custom rotation - parses via flag.Args()</td></tr>
-<tr><td><code>sudo./ruler -interval 1 wlan0</code></td><td>After building binary</td></tr>
-<tr><td><code>ip addr show eth0 | grep 10.255.254</code></td><td>Verify decoys are live</td></tr>
-<tr><td><code>Ctrl + C</code></td><td>Triggers sigChan -> clearAll()</td></tr>
-</table>
-
-<h2>4. Requirements & Dependencies</h2>
-<p>From your imports: <code>flag, fmt, math/rand, net, os, os/exec, os/signal, syscall, time</code></p>
-<ul>
-<li>Go 1.19+</li>
-<li>Linux with <code>iproute2</code> installed (provides <code>ip</code> command)</li>
-<li>Root access - because <code>ip addr add</code> needs root</li>
-<li>Interface must be UP</li>
-</ul>
-
-<h2>5. Limitations in Current Version (v1)</h2>
-<ul>
-<li>Range is predictable: 10.255.254.10-209 only - I can improve to random across 3 private ranges</li>
-<li>Uses <code>exec.Command</code> not netlink - slower</li>
-<li>No log file</li>
-</ul>
-
-<h2>6. Use Cases</h2>
-<ul>
-<li>Blue Team training in AmphiptereOS</li>
-<li>Deceive Nmap: <code>nmap -sn 10.255.254.0/24</code> will show 10 hosts</li>
-<li>SOC lab - trigger alerts on decoy IPs to detect scanner</li>
-</ul>
-
-<div style="text-align:center; margin:40px 0;">
-  <a href="https://github.com/AmphiptereOS/ruler" class="button" style="background:#36d7b7; color:#000; padding:14px 28px; text-decoration:none; border-radius:6px; font-weight:bold;">View Source on GitHub</a>
-</div>
-
-<hr style="border-color:#222;">
-<p style="text-align:center; font-size:12px; color:#555;">© 2026 AmphiptereOS | Full Technical Docs for Ruler v1.0 | Educational Only</p>
+<footer>© 2026 AmphiptereOS • Purple Team Tools • Open Source • G-HZDDNFE6F4</footer>
 
 </body>
 </html>
