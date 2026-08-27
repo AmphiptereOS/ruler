@@ -16,7 +16,9 @@ h1{font-family:monospace;font-size:58px;letter-spacing:10px;margin:14px 0 0;colo
 .text{margin:32px auto;text-align:left;background:#111;border:1px solid #1e1e1e;border-radius:14px;padding:24px;line-height:1.8;color:#aaa;font-size:15px}
 .text b{color:#fff}
 pre{background:#0f0f0f;border:1px solid #1e1e1e;border-radius:10px;padding:18px;color:#7dd3fc;text-align:left;overflow:auto;margin-top:30px}
-a.btn{display:inline-block;margin-top:28px;background:#fff;color:#000;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px}
+.btn{display:inline-block;margin:8px;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px}
+.btn-white{background:#fff;color:#000}
+.btn-outline{border:1px solid #2a2a2a;color:#fff;background:#111}
 .foot{color:#333;text-align:center;padding:50px;font-size:11px}
 </style>
 </head>
@@ -38,7 +40,11 @@ Automatically validates that your target network interface exists and is active 
 sudo go run Ruler.go -interval 5 wlan0
 sudo ./ruler -interval 1 eth0</pre>
 
-<a class="btn" href="https://github.com/AmphiptereOS/ruler">View on GitHub</a>
+<div style="margin-top:28px">
+<a class="btn btn-white" href="Ruler.go" download>Download Ruler.go</a>
+<a class="btn btn-outline" href="https://raw.githubusercontent.com/AmphiptereOS/ruler/main/Ruler.go" target="_blank">Raw Source</a>
+<a class="btn btn-outline" href="https://github.com/AmphiptereOS/ruler">GitHub</a>
+</div>
 
 <p style="color:#444;font-size:11px;margin-top:40px">For educational, defensive research, and authorized network security testing only.<br>The author and contributors assume no liability for misuse or damage.</p>
 </div>
